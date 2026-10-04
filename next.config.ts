@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import imageSizes from "./src/lib/image-sizes.json";
+import { readFileSync } from "node:fs";
 
 /**
  * Dois alvos de build:
@@ -8,6 +8,9 @@ import imageSizes from "./src/lib/image-sizes.json";
  */
 const pages = process.env.GITHUB_PAGES === "true";
 const basePath = pages ? process.env.NEXT_PUBLIC_BASE_PATH || "" : "";
+// Lido só no build do Pages: o runtime de produção (Docker na VPS) não copia src/ para a imagem,
+// então nada fora do ramo `pages` pode depender de arquivos em src/.
+const imageSizes = pages ? JSON.parse(readFileSync("./src/lib/image-sizes.json", "utf8")) : {};
 
 const nextConfig: NextConfig = pages
   ? {
