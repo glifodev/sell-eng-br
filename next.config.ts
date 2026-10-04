@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import imageSizes from "./src/lib/image-sizes.json";
 
 /**
  * Dois alvos de build:
@@ -13,7 +14,7 @@ const nextConfig: NextConfig = pages
       output: "export",
       basePath,
       trailingSlash: true,
-      images: { loader: "custom", loaderFile: "./src/lib/image-loader.ts" },
+      images: { loader: "custom", loaderFile: "./src/lib/image-loader.ts", ...imageSizes },
       env: { NEXT_PUBLIC_STATIC_EXPORT: "true", NEXT_PUBLIC_BASE_PATH: basePath },
     }
   : {

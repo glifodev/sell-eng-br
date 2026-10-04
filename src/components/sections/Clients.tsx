@@ -17,6 +17,8 @@ export function ClientMarquee({ className = "", tone = "light" }: { className?: 
                   alt={i < clients.length ? c.name : ""}
                   width={140}
                   height={56}
+                  // o carrossel desliza logos que estão fora do viewport: lazy-load as deixaria em branco
+                  loading="eager"
                   className={`w-auto object-contain transition duration-300 hover:grayscale-0 ${dark ? "h-9 opacity-80 grayscale hover:opacity-100" : "h-10 opacity-60 grayscale hover:opacity-100"}`}
                 />
               </li>

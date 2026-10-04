@@ -42,3 +42,6 @@ next-env.d.ts
 
 # backup bruto do site Wix (HTML gerado, pesado)
 /_legacy/site/
+
+# variantes de imagem geradas para o export estático
+/public/_img/
