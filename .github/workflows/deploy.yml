@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [Quality]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-sell-eng-br-main
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to production
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: self-hosted
+    timeout-minutes: 30
+    environment: production
+    steps:
+      # ARMADILHA: github.sha aqui seria o HEAD atual do branch, nao o commit
+      # que passou no Quality. Tem que usar o head_sha do workflow_run.
+      - name: Check out the deployed revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Deploy
+        env:
+          SELL_DEPLOY_DIR: ${{ vars.SELL_DEPLOY_DIR }}
+          DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: bash "$GITHUB_WORKSPACE/deploy.sh"
