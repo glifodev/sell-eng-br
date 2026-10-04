@@ -1,0 +1,13 @@
+.git
+.github
+node_modules
+**/node_modules
+.next
+out
+.env
+.env.*
+secrets
+docker-compose.yml
+_legacy
+docs
+README.md
