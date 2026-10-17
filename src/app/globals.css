@@ -2,28 +2,31 @@
 
 /*
  * SELL — design tokens
- * abyss/deep: superfícies escuras (oceano profundo)
+ * abyss/deep/hull: azul-marinho profundo (superfícies escuras)
  * fog/paper: superfícies claras
- * signal: âmbar de sinalização marítima (herdado do amarelo da marca antiga)
- * tide: azul de maré, apoio em gráficos/realces
+ * signal: ciano de superfície — faixa superior da marca, destaques e CTAs
+ * tide: azul de canal — faixa do meio da marca, apoio em gráficos/realces
+ * ice: azul-gelo para fundos de selo/realce claro
  */
 @theme {
-  --color-abyss: #07111c;
-  --color-deep: #0c1b2b;
-  --color-hull: #13263a;
-  --color-tide: #2f6fa3;
-  --color-tide-soft: #8db4d6;
-  --color-fog: #eef1f4;
+  --color-abyss: #031330;
+  --color-deep: #06204a;
+  --color-hull: #0b2c63;
+  --color-tide: #1268c9;
+  --color-tide-soft: #9fcdf2;
+  --color-fog: #eef3f8;
   --color-paper: #ffffff;
-  --color-ink: #0a1520;
-  --color-muted: #5f6b77;
-  --color-mist: #a9b4bf;
-  --color-signal: #f2a900;
-  --color-signal-deep: #c98a00;
-  --color-line: rgb(10 21 32 / 0.12);
+  --color-ink: #061631;
+  --color-muted: #5a6880;
+  --color-mist: #a6b3c4;
+  --color-signal: #2ac0ea;
+  --color-signal-deep: #0f9bc6;
+  --color-ice: #b8e1ff;
+  --color-line: rgb(6 22 49 / 0.12);
   --color-line-dark: rgb(255 255 255 / 0.12);
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), var(--font-geist), ui-sans-serif, sans-serif;
   --font-mono: var(--font-fragment), ui-monospace, monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -56,6 +59,9 @@
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
     text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
   }
   ::selection {
     background: var(--color-signal);
@@ -92,19 +98,22 @@
   }
 
   .h-display {
-    font-weight: 400;
-    letter-spacing: -0.035em;
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.04em;
     line-height: 1.02;
     font-size: clamp(2.6rem, 6.2vw, 5.4rem);
   }
   .h-section {
-    font-weight: 400;
-    letter-spacing: -0.03em;
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.035em;
     line-height: 1.08;
     font-size: clamp(2rem, 4vw, 3.25rem);
   }
   .h-card {
-    font-weight: 400;
+    font-family: var(--font-display);
+    font-weight: 500;
     letter-spacing: -0.02em;
     line-height: 1.2;
     font-size: 1.25rem;
@@ -131,7 +140,7 @@
   .btn-ghost { border-color: var(--color-line); color: var(--color-ink); background: transparent; }
   .btn-ghost:hover { border-color: var(--color-ink); }
   .btn-signal { background: var(--color-signal); color: var(--color-abyss); }
-  .btn-signal:hover { background: #ffbe2e; }
+  .btn-signal:hover { background: #6fd6f3; }
 
   .chip {
     display: inline-flex;
@@ -164,7 +173,7 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  .prose-sell h2 { font-size: 1.5rem; letter-spacing: -0.02em; margin: 2.5rem 0 0.75rem; }
+  .prose-sell h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.025em; margin: 2.5rem 0 0.75rem; }
   .prose-sell h3 { font-size: 1.15rem; margin: 1.75rem 0 0.5rem; }
   .prose-sell p, .prose-sell li { color: var(--color-muted); line-height: 1.7; }
   .prose-sell ul { list-style: disc; padding-left: 1.25rem; margin: 0.75rem 0; }

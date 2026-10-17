@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { ClientMarquee } from "@/components/sections/Clients";
 import { PageHero } from "@/components/sections/PageHero";
-import { WireScene } from "@/components/three/Scene";
+import { RegionScene, WireScene } from "@/components/three/Scene";
+import { destinations } from "@/components/three/regionData";
 import { Icon } from "@/components/ui/Icon";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ArrowCard, ButtonLink, Eyebrow, SectionHeader } from "@/components/ui/primitives";
@@ -63,19 +64,42 @@ export default function SobrePage() {
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-3 sm:grid-cols-3">
-          <div className="flex min-h-[150px] flex-col justify-between bg-paper p-6">
-            <p className="text-sm">Sede</p>
-            <p className="text-3xl tracking-tight">São Luís · MA</p>
+        <div className="mt-14 grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.1fr)]">
+          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            <div className="flex min-h-[150px] flex-col justify-between bg-paper p-6">
+              <p className="text-sm">Sede</p>
+              <p className="text-3xl tracking-tight">São Luís · MA</p>
+            </div>
+            <div className="flex min-h-[150px] flex-col justify-between bg-paper p-6">
+              <p className="text-sm">Atuação</p>
+              <p className="text-3xl tracking-tight">Norte & Nordeste</p>
+            </div>
+            <div className="flex min-h-[150px] flex-col justify-between bg-paper p-6">
+              <p className="text-sm">Especialidades</p>
+              <p className="text-2xl tracking-tight">Naval · Portuária · Mecânica · Ambiental</p>
+            </div>
           </div>
-          <div className="flex min-h-[150px] flex-col justify-between bg-paper p-6">
-            <p className="text-sm">Atuação</p>
-            <p className="text-3xl tracking-tight">Norte & Nordeste</p>
-          </div>
-          <div className="flex min-h-[150px] flex-col justify-between bg-paper p-6">
-            <p className="text-sm">Especialidades</p>
-            <p className="text-3xl tracking-tight">Naval · Portuária · Mecânica · Ambiental</p>
-          </div>
+
+          <figure className="relative isolate flex min-h-[460px] flex-col overflow-hidden bg-abyss text-white lg:min-h-0">
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_60%_40%,#0b2c63,transparent_65%)]" aria-hidden="true" />
+            <div className="flex items-start justify-between gap-4 p-6 pb-0">
+              <div>
+                <p className="eyebrow text-white/50">Região de atuação</p>
+                <p className="mt-2 text-xl tracking-tight">Mobilização a partir de São Luís</p>
+              </div>
+              <div className="hidden items-center gap-2 font-mono text-[10px] text-white/50 sm:flex">
+                <span>base</span>
+                <span className="h-1.5 w-24 bg-gradient-to-r from-[#f27a00] via-[#58c2b4] to-[#1d4f80]" />
+                <span>distância</span>
+              </div>
+            </div>
+            <RegionScene className="relative min-h-[340px] flex-1" />
+            <figcaption className="flex flex-wrap gap-x-4 gap-y-1 border-t border-line-dark px-6 py-4 font-mono text-[10px] tracking-[0.12em] text-white/45 uppercase">
+              {destinations.map((d) => (
+                <span key={d.name}>{d.name}</span>
+              ))}
+            </figcaption>
+          </figure>
         </div>
       </section>
 

@@ -149,7 +149,7 @@ export function Header() {
           open ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,#13263a,transparent_60%)]" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,#0b2c63,transparent_60%)]" aria-hidden="true" />
         <nav aria-label="Menu móvel" className="container-x relative flex min-h-full flex-col py-8">
           <ul>
             {[{ href: "/", label: "Início" }, ...nav].map((item, i) => (

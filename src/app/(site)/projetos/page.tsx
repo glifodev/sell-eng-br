@@ -82,7 +82,7 @@ export default function ProjetosPage() {
 
       {/* Do modelo ao campo */}
       <section className="relative isolate overflow-hidden border-y border-line-dark bg-deep">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_75%_50%,#13263a,transparent_60%)]" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_75%_50%,#0b2c63,transparent_60%)]" aria-hidden="true" />
         <div className="container-x grid items-center gap-10 py-20 md:py-28 lg:grid-cols-[1fr_1.1fr]">
           <div>
             <Eyebrow className="text-white/75">Do modelo ao campo</Eyebrow>

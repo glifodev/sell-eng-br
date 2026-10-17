@@ -41,7 +41,7 @@ export default function LinksPage() {
 
       <div className="mx-auto flex max-w-md flex-col items-center px-5 pt-16 pb-20">
         <Link href="/" aria-label="Ir para o site da SELL" className="grid size-20 place-items-center rounded-2xl border border-line-dark bg-white/5 backdrop-blur">
-          <LogoWordmark className="h-5 w-auto text-white" />
+          <LogoWordmark className="h-5 w-auto text-white" b="var(--color-tide-soft)" />
         </Link>
         <h1 className="mt-6 text-2xl tracking-tight">{company.name}</h1>
         <p className="mt-2 text-center text-sm text-white/60">Engenharia naval, portuária e mecânica · São Luís/MA</p>
@@ -50,7 +50,7 @@ export default function LinksPage() {
           {items.map((it) => {
             const external = it.href.startsWith("http") || it.href.startsWith("mailto:");
             const cls = `group flex items-center gap-4 px-5 py-4 transition-colors ${
-              it.primary ? "bg-signal text-abyss hover:bg-[#ffbe2e]" : "border border-line-dark bg-white/[0.04] backdrop-blur hover:bg-white/10"
+              it.primary ? "bg-signal text-abyss hover:bg-[#6fd6f3]" : "border border-line-dark bg-white/[0.04] backdrop-blur hover:bg-white/10"
             }`;
             const inner = (
               <>

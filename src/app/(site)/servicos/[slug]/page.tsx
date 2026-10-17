@@ -72,7 +72,7 @@ export default async function ServicoPage({ params }: PageProps<"/servicos/[slug
 
       {/* Como funciona */}
       <section className="relative isolate overflow-hidden bg-deep py-24 text-white md:py-32">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_85%_0%,#13263a,transparent_55%)]" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_85%_0%,#0b2c63,transparent_55%)]" aria-hidden="true" />
         <div className="container-x">
           <h2 className="h-section md:pl-[calc(140px+2.5rem)]">Como funciona</h2>
           <ol className="mt-14">
@@ -90,7 +90,7 @@ export default async function ServicoPage({ params }: PageProps<"/servicos/[slug
       </section>
 
       <section className="relative isolate overflow-hidden bg-abyss text-white">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_70%_50%,#13263a_0%,transparent_60%)]" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_70%_50%,#0b2c63_0%,transparent_60%)]" aria-hidden="true" />
         <div className="container-x grid items-center gap-8 py-20 md:py-28 lg:grid-cols-2">
           <div>
             <Eyebrow className="text-white/75">Engenharia em modelo</Eyebrow>
