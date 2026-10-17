@@ -106,7 +106,7 @@ function Field({ base, crest }: { base: string; crest: string }) {
   );
 }
 
-export default function OceanField({ base = "#2f6fa3", crest = "#f2a900", paused = false }: { base?: string; crest?: string; paused?: boolean }) {
+export default function OceanField({ base = "#1268c9", crest = "#2ac0ea", paused = false }: { base?: string; crest?: string; paused?: boolean }) {
   return (
     <Canvas
       dpr={[1, 1.75]}

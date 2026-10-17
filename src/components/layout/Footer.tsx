@@ -38,7 +38,7 @@ export function Footer() {
       <div className="container-x">
         <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="sm:col-span-2 lg:col-span-4">
-            <LogoWordmark className="h-7 w-auto text-white" />
+            <LogoWordmark className="h-8 w-auto text-white" b="var(--color-tide-soft)" />
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/55">{company.tagline} para portos, embarcações e estruturas — do projeto à operação em campo.</p>
             <div className="mt-8 flex gap-2">
               {(["instagram", "linkedin", "facebook"] as const).map((k) => (
@@ -102,7 +102,7 @@ export function Footer() {
 
       {/* Marca d'água */}
       <div className="container-x pointer-events-none select-none" aria-hidden="true">
-        <LogoWordmark className="h-auto w-full text-white/[0.05]" wave="rgb(242 169 0 / 0.18)" />
+        <LogoWordmark className="h-auto w-full text-white/[0.05]" mono />
       </div>
 
       {/* Base */}

@@ -125,7 +125,7 @@ export default function Home() {
 
       {/* SERVIÇOS */}
       <section className="relative isolate overflow-hidden bg-deep py-24 text-white md:py-36">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_15%_0%,#13263a,transparent_55%)]" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_15%_0%,#0b2c63,transparent_55%)]" aria-hidden="true" />
         <div className="container-x">
           <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
             <SectionHeader tone="light" eyebrow="Serviços" title="Soluções de engenharia para cada etapa da operação." />
@@ -160,7 +160,7 @@ export default function Home() {
 
       {/* MEF / FEA */}
       <section className="relative isolate overflow-hidden bg-abyss py-24 text-white md:py-32">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_70%_50%,#13263a_0%,transparent_60%)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_70%_50%,#0b2c63_0%,transparent_60%)]" />
         <div className="container-x grid items-center gap-10 lg:grid-cols-2">
           <div>
             <SectionHeader

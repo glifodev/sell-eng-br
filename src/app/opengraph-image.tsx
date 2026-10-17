@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { S_BOTTOM, S_TOP, S_WAVE } from "@/components/brand/Logo";
+import { LOCKUP, MARK_BANDS, WORD_CLIP, WORD_PATH } from "@/components/brand/Logo";
 
 export const dynamic = "force-static";
 
@@ -18,21 +18,23 @@ export default function OgImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 72,
-          background: "linear-gradient(160deg, #13263a 0%, #07111c 60%)",
+          background: "linear-gradient(160deg, #0b2c63 0%, #031330 60%)",
           color: "white",
           fontFamily: "sans-serif",
         }}
       >
-        <svg width="236" height="85" viewBox="4 3 94 34" fill="none">
-          <g stroke="#ffffff" strokeWidth="4.5">
-            <path d={S_TOP} strokeLinejoin="round" />
-            <path d={S_BOTTOM} strokeLinejoin="round" />
-            <path d="M58 7 H42.25 V33 H58" />
-            <path d="M42 20 H54" />
-            <path d="M66.25 4.75 V33 H80" />
-            <path d="M84.25 4.75 V33 H98" />
+        <svg width="292" height="80" viewBox={LOCKUP.viewBox}>
+          <defs>
+            <clipPath id="w">
+              <path d={WORD_CLIP} />
+            </clipPath>
+          </defs>
+          <g transform={LOCKUP.markTransform}>
+            {MARK_BANDS.map((d, i) => (
+              <path key={i} d={d} fill={["#2ac0ea", "#9fcdf2", "#ffffff"][i]} />
+            ))}
           </g>
-          <path d={S_WAVE} stroke="#f2a900" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d={WORD_PATH} transform={`translate(${LOCKUP.wordX} 0)`} clipPath="url(#w)" fill="#ffffff" />
         </svg>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 68, letterSpacing: -2, lineHeight: 1.05, maxWidth: 900 }}>Engenharia naval, portuária e mecânica.</div>
@@ -40,7 +42,7 @@ export default function OgImage() {
             São Luís · MA — Norte & Nordeste · sell.eng.br
           </div>
         </div>
-        <div style={{ display: "flex", height: 6, width: 160, background: "#f2a900" }} />
+        <div style={{ display: "flex", height: 6, width: 160, background: "#2ac0ea" }} />
       </div>
     ),
     size,

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fragment_Mono, Geist } from "next/font/google";
+import { Fragment_Mono, Geist, Outfit } from "next/font/google";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { company, SITE_URL } from "@/content/site";
@@ -7,6 +7,7 @@ import { organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin", "latin-ext"], display: "swap" });
+const outfit = Outfit({ variable: "--font-outfit", weight: ["400", "500", "600", "700"], subsets: ["latin", "latin-ext"], display: "swap" });
 const fragment = Fragment_Mono({ variable: "--font-fragment", weight: "400", subsets: ["latin", "latin-ext"], display: "swap" });
 
 export const metadata: Metadata = {
@@ -38,13 +39,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#07111c",
+  themeColor: "#031330",
   colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${geist.variable} ${fragment.variable} antialiased`}>
+    <html lang="pt-BR" className={`${geist.variable} ${outfit.variable} ${fragment.variable} antialiased`}>
       <body className="min-h-dvh">
         <a href="#conteudo" className="sr-only z-[100] bg-signal px-4 py-2 text-abyss focus:not-sr-only focus:fixed focus:top-3 focus:left-3">
           Pular para o conteúdo

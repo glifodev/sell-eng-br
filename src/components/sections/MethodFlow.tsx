@@ -236,8 +236,8 @@ function VerticalFlow() {
             >
               <motion.span
                 variants={{
-                  off: { backgroundColor: "#eef1f4", color: "#a9b4bf", borderColor: "rgba(10,21,32,0.12)", scale: 1 },
-                  on: { backgroundColor: "#07111c", color: "#f2a900", borderColor: "#07111c", scale: [1, 1.15, 1] },
+                  off: { backgroundColor: "#eef3f8", color: "#a6b3c4", borderColor: "rgba(6,22,49,0.12)", scale: 1 },
+                  on: { backgroundColor: "#031330", color: "#2ac0ea", borderColor: "#031330", scale: [1, 1.15, 1] },
                 }}
                 transition={{ duration: 0.5 }}
                 className="absolute top-0 -left-14 grid size-10 place-items-center rounded-full border"
