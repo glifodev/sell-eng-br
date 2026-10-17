@@ -663,3 +663,72 @@ export const faq = [
     a: "A periodicidade depende da agressividade do ambiente, da maré e do uso. Recomendamos inspeções regulares das amarras, manilhas e bóias, com plano de manutenção definido no projeto de fundeio.",
   },
 ];
+
+/* ------------------------------------------------------------------ */
+/* Competências do corpo técnico                                       */
+/* ------------------------------------------------------------------ */
+
+export const competencies: {
+  title: string;
+  text: string;
+  icon: IconName;
+  model: WireModelName;
+  services: string[]; // slugs
+}[] = [
+  {
+    title: "Arquitetura e engenharia naval",
+    text: "Projeto, estabilidade e arranjo de embarcações e balsas, da concepção à documentação para a Autoridade Marítima.",
+    icon: "hull",
+    model: "hull",
+    services: ["projetos-navais-portuarios-mecanicos", "gestao-de-operacoes-navais"],
+  },
+  {
+    title: "Engenharia mecânica",
+    text: "Sistemas mecânicos, equipamentos de convés e estruturas de içamento dimensionados para a realidade da operação.",
+    icon: "crane",
+    model: "crane",
+    services: ["projetos-navais-portuarios-mecanicos", "operacoes-portuarias-icamento"],
+  },
+  {
+    title: "Análise estrutural por MEF",
+    text: "Simulação por elementos finitos para prever tensões, deformações e fadiga antes de cortar o aço.",
+    icon: "mesh",
+    model: "padeye",
+    services: ["analise-elementos-finitos-mef"],
+  },
+  {
+    title: "Engenharia ambiental",
+    text: "Licenciamento, estudos de impacto, planos de mitigação e resposta a emergências ambientais.",
+    icon: "leaf",
+    model: "mooring",
+    services: ["consultoria-ambiental", "salvatagem-resposta-ambiental"],
+  },
+  {
+    title: "Operações portuárias",
+    text: "Carga e descarga, movimentação de cargas especiais e planejamento de operações em terminais.",
+    icon: "anchor",
+    model: "jacket",
+    services: ["operacoes-portuarias-icamento", "gerenciamento-de-projetos"],
+  },
+  {
+    title: "Salvatagem",
+    text: "Planos de reflutuação e resgate de embarcações com cálculo de içamento e estabilidade em cada manobra.",
+    icon: "lifebuoy",
+    model: "crane",
+    services: ["salvatagem-resposta-ambiental"],
+  },
+  {
+    title: "Ensaios não destrutivos",
+    text: "Medição de espessura e inspeção de soldas por ultrassom para decisões de reparo baseadas em dados.",
+    icon: "wave",
+    model: "hull",
+    services: ["ensaios-nao-destrutivos-ultrassom", "inspecao-subaquatica"],
+  },
+  {
+    title: "Segurança do trabalho",
+    text: "Gestão de riscos ocupacionais e adequação às NRs em ambientes portuários e navais.",
+    icon: "shield",
+    model: "jacket",
+    services: ["seguranca-do-trabalho", "capacitacao-tecnica"],
+  },
+];

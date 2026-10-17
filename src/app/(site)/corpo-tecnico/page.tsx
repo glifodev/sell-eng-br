@@ -1,6 +1,6 @@
 import Image from "next/image";
+import { CompetencyExplorer } from "@/components/sections/CompetencyExplorer";
 import { PageHero } from "@/components/sections/PageHero";
-import { WireScene } from "@/components/three/Scene";
 import { Icon } from "@/components/ui/Icon";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ButtonLink, SectionHeader } from "@/components/ui/primitives";
@@ -23,16 +23,6 @@ const initials = (n: string) =>
     .map((p) => p[0])
     .join("");
 
-const competencies = [
-  "Arquitetura e engenharia naval",
-  "Engenharia mecânica",
-  "Análise estrutural por MEF",
-  "Engenharia ambiental",
-  "Operações portuárias",
-  "Salvatagem",
-  "Ensaios não destrutivos",
-  "Segurança do trabalho",
-];
 
 export default function CorpoTecnicoPage() {
   return (
@@ -49,7 +39,7 @@ export default function CorpoTecnicoPage() {
         </ButtonLink>
       </PageHero>
 
-      <section className="container-x py-24 md:py-32">
+      <section id="equipe" className="scroll-mt-24 container-x py-24 md:py-32">
         <SectionHeader eyebrow="Equipe" title="Quem assina a engenharia da SELL." />
         <ul className="mt-14 grid gap-x-4 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {team.map((m, i) => (
@@ -58,7 +48,7 @@ export default function CorpoTecnicoPage() {
                 {m.photo ? (
                   <Image src={m.photo} alt={m.name} fill sizes="(min-width: 1024px) 380px, 50vw" className="object-cover" />
                 ) : (
-                  <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_30%_20%,#13263a,#07111c_70%)]">
+                  <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_30%_20%,#0b2c63,#031330_70%)]">
                     <span className="text-6xl font-light tracking-tight text-white/85">{initials(m.name)}</span>
                     <svg className="absolute inset-x-0 bottom-0 h-24 w-full text-tide/40" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
                       <path d="M0 60 Q50 40 100 60 T200 60 T300 60 T400 60" fill="none" stroke="currentColor" strokeWidth="1.5" />
@@ -80,20 +70,16 @@ export default function CorpoTecnicoPage() {
         </ul>
       </section>
 
-      <section className="bg-deep py-24 text-white md:py-32">
-        <div className="container-x grid gap-12 lg:grid-cols-2">
-          <div>
+      <section className="relative isolate overflow-hidden bg-deep py-24 text-white md:py-32">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_0%,#0b2c63,transparent_55%)]" aria-hidden="true" />
+        <div className="container-x">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <SectionHeader tone="light" eyebrow="Competências" title="Conhecimento técnico que cobre a operação inteira." />
-            <WireScene model="padeye" className="mt-6 aspect-[4/3] w-full max-w-md" />
+            <p className="max-w-sm text-sm text-white/55">Selecione uma competência para ver o tipo de modelo de engenharia e os serviços em que ela é aplicada.</p>
           </div>
-          <ul className="grid grid-cols-1 gap-px self-end border border-line-dark bg-line-dark sm:grid-cols-2">
-            {competencies.map((c) => (
-              <li key={c} className="flex items-center gap-3 bg-deep p-5 text-[15px] text-white/85">
-                <span className="size-1.5 bg-signal" aria-hidden="true" />
-                {c}
-              </li>
-            ))}
-          </ul>
+          <div className="mt-14">
+            <CompetencyExplorer />
+          </div>
         </div>
       </section>
 

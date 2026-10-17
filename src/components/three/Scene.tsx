@@ -6,6 +6,7 @@ import type { WireModelName } from "./wireModels";
 
 const OceanField = dynamic(() => import("./OceanField"), { ssr: false });
 const WireModel = dynamic(() => import("./WireModel"), { ssr: false });
+const RegionMap = dynamic(() => import("./RegionMap"), { ssr: false });
 
 /** Monta a cena WebGL só quando visível e pausa fora da viewport. */
 function useVisibility<T extends HTMLElement>() {
@@ -52,4 +53,14 @@ export function WireScene({ model, className = "" }: { model: WireModelName; cla
 
 export function HullScene({ className = "" }: { className?: string }) {
   return <WireScene model="hull" className={className} />;
+}
+
+/** Mapa wireframe da área de atuação (Norte e Nordeste) com rotas a partir de São Luís. */
+export function RegionScene({ className = "" }: { className?: string }) {
+  const { ref, mount, paused } = useVisibility<HTMLDivElement>();
+  return (
+    <div ref={ref} className={className} aria-hidden="true">
+      {mount && <RegionMap paused={paused} />}
+    </div>
+  );
 }
