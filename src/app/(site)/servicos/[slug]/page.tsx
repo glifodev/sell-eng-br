@@ -50,8 +50,8 @@ export default async function ServicoPage({ params }: PageProps<"/servicos/[slug
         title={s.title}
         lead={s.short}
       >
-        <ButtonLink href="/contato" variant="light" arrow>
-          Solicitar orçamento
+        <ButtonLink href={`/contratar?servico=${s.slug}`} variant="light" arrow>
+          Contratar serviço
         </ButtonLink>
         <ButtonLink href={whatsappLink(`Olá, SELL! Gostaria de falar sobre ${s.title}.`)} variant="ghost-dark">
           <Icon name="whatsapp" className="size-4" /> WhatsApp

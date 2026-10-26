@@ -23,8 +23,8 @@ export function Footer() {
           <div className="flex flex-col gap-6 md:items-end">
             <p className="max-w-sm text-white/60 md:text-right">Engenharia naval, portuária e mecânica em São Luís/MA, com atuação em todo o Norte e Nordeste.</p>
             <div className="flex flex-wrap gap-2">
-              <ButtonLink href="/contato" variant="signal" arrow>
-                Solicitar orçamento
+              <ButtonLink href="/contratar" variant="signal" arrow>
+                Contratar serviço
               </ButtonLink>
               <ButtonLink href={whatsappLink()} variant="ghost-dark">
                 <Icon name="whatsapp" className="size-4" /> WhatsApp

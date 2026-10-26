@@ -7,6 +7,7 @@ import { company } from "@/content/site";
  */
 
 const clean = (v: unknown, max = 2000) => (typeof v === "string" ? v.trim().slice(0, max) : "");
+const URGENCIA: Record<string, string> = { emergencia: "Emergência", curto: "Até 30 dias", planejamento: "Planejamento" };
 const escape = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
 export async function POST(req: Request) {
@@ -20,12 +21,22 @@ export async function POST(req: Request) {
   // honeypot: robôs preenchem, humanos não veem
   if (clean(body.empresa_site)) return Response.json({ ok: true });
 
+  const contratacao = clean(body.tipo, 20) === "contratacao";
+  const urgencia = URGENCIA[clean(body.urgencia, 20)] ?? "";
   const data = {
     nome: clean(body.nome, 120),
     email: clean(body.email, 160),
     telefone: clean(body.telefone, 40),
     empresa: clean(body.empresa, 160),
     servico: clean(body.servico, 160),
+    // campos do formulário "Contratar serviço"
+    ...(contratacao && {
+      area: clean(body.area, 160),
+      urgencia,
+      ativo: clean(body.ativo, 80),
+      local: clean(body.local, 200),
+      prazo: clean(body.prazo, 20),
+    }),
     mensagem: clean(body.mensagem, 5000),
   };
 
@@ -43,6 +54,7 @@ export async function POST(req: Request) {
   }
 
   const html = Object.entries(data)
+    .filter(([, v]) => v)
     .map(([k, v]) => `<p><strong>${k}:</strong> ${escape(v).replace(/\n/g, "<br>")}</p>`)
     .join("");
 
@@ -53,7 +65,9 @@ export async function POST(req: Request) {
       from: process.env.CONTACT_FROM ?? `Site SELL <site@sell.eng.br>`,
       to: [process.env.CONTACT_TO ?? company.emails.comercial],
       reply_to: data.email,
-      subject: `Contato pelo site — ${data.nome}${data.servico ? ` (${data.servico})` : ""}`,
+      subject: contratacao
+        ? `${urgencia === "Emergência" ? "[EMERGÊNCIA] " : ""}Contratar serviço — ${data.servico || "A definir"} — ${data.nome}`
+        : `Contato pelo site — ${data.nome}${data.servico ? ` (${data.servico})` : ""}`,
       html,
     }),
   });

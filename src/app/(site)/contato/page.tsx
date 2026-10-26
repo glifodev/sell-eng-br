@@ -43,9 +43,14 @@ export default function ContatoPage() {
               <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
                 Atendimento direto com nossa engenharia para orçamentos, visitas técnicas e emergências operacionais.
               </p>
-              <ButtonLink href={whatsappLink()} variant="signal" className="mt-6">
-                <Icon name="whatsapp" className="size-4" /> Conversar no WhatsApp
-              </ButtonLink>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <ButtonLink href="/contratar" variant="dark" arrow>
+                  Contratar serviço
+                </ButtonLink>
+                <ButtonLink href={whatsappLink()} variant="signal">
+                  <Icon name="whatsapp" className="size-4" /> WhatsApp
+                </ButtonLink>
+              </div>
             </div>
             <ul className="divide-y divide-line border-y border-line">
               {channels.map((c) => (

@@ -15,7 +15,7 @@ const mobileLinks = [
 ];
 
 /** Rotas cuja primeira dobra é clara (header começa com texto escuro). */
-const LIGHT_TOP = ["/contato", "/privacidade", "/termos", "/creditos"];
+const LIGHT_TOP = ["/contratar", "/contato", "/privacidade", "/termos", "/creditos"];
 
 export function Header() {
   const pathname = usePathname();
@@ -158,12 +158,12 @@ export function Header() {
 
           <div className="flex items-center gap-2">
             <Link
-              href="/contato"
+              href="/contratar"
               className={`hidden h-10 items-center border px-4 text-[13.5px] transition-colors sm:inline-flex ${
                 dark ? "border-line-dark hover:border-signal hover:bg-signal hover:text-abyss" : "border-line hover:bg-ink hover:text-white"
               }`}
             >
-              Solicitar orçamento
+              Contratar serviço
             </Link>
             <button
               type="button"
@@ -223,8 +223,8 @@ export function Header() {
           </ul>
 
           <div className="mt-auto grid gap-2 pt-10 sm:grid-cols-2">
-            <Link href="/contato" className="btn btn-signal justify-center">
-              Solicitar orçamento
+            <Link href="/contratar" className="btn btn-signal justify-center">
+              Contratar serviço
             </Link>
             <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark justify-center">
               <Icon name="whatsapp" className="size-4" /> {company.phoneDisplay}
