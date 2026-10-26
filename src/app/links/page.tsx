@@ -18,7 +18,7 @@ export default function LinksPage() {
   const a = company.address;
   const items: Item[] = [
     { label: "Falar no WhatsApp", sub: company.phoneDisplay, href: whatsappLink(), icon: "whatsapp", primary: true },
-    { label: "Solicitar orçamento", href: "/contato", icon: "arrow" },
+    { label: "Contratar serviço", href: "/contratar", icon: "arrow" },
     { label: "Nossos serviços", href: "/servicos", icon: "hull" },
     { label: "Projetos realizados", href: "/projetos", icon: "crane" },
     { label: "Corpo técnico", href: "/corpo-tecnico", icon: "cap" },

@@ -57,8 +57,8 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.24}>
             <div className="mt-9 flex flex-wrap gap-3">
-              <ButtonLink href="/contato" variant="light" arrow>
-                Solicitar orçamento
+              <ButtonLink href="/contratar" variant="light" arrow>
+                Contratar serviço
               </ButtonLink>
               <ButtonLink href="/projetos" variant="ghost-dark">
                 Ver projetos

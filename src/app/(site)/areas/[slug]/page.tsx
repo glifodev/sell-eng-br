@@ -44,8 +44,8 @@ export default async function AreaPage({ params }: PageProps<"/areas/[slug]">) {
         title={a.title}
         lead={a.short}
       >
-        <ButtonLink href="/contato" variant="light" arrow>
-          Solicitar orçamento
+        <ButtonLink href={`/contratar?area=${a.slug}`} variant="light" arrow>
+          Contratar serviço
         </ButtonLink>
         <ButtonLink href={whatsappLink(`Olá, SELL! Gostaria de falar sobre ${a.title}.`)} variant="ghost-dark">
           <Icon name="whatsapp" className="size-4" /> WhatsApp

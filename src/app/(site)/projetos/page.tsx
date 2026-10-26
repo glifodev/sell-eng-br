@@ -122,7 +122,7 @@ export default function ProjetosPage() {
             <p className="text-2xl tracking-tight md:text-3xl">Tem uma operação parecida pela frente?</p>
             <p className="mt-2 text-sm text-white/55">Conte o cenário — embarcação, local, prazo — e nossa engenharia propõe o caminho.</p>
           </div>
-          <ArrowCard href="/contato" title="Solicitar orçamento" text="Atendimento técnico direto" className="min-h-[140px] md:w-72" />
+          <ArrowCard href="/contratar" title="Contratar serviço" text="Atendimento técnico direto" className="min-h-[140px] md:w-72" />
         </div>
       </section>
 

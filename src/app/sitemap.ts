@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/conteudos", 0.7),
     ...posts.map((p) => ({ ...page(`/conteudos/${p.slug}`, 0.6), lastModified: new Date(`${p.date}T12:00:00`) })),
     page("/carreiras", 0.4),
+    page("/contratar", 0.9),
     page("/contato", 0.8),
     page("/links", 0.3),
     page("/privacidade", 0.2, "yearly"),
