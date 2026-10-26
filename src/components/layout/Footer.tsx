@@ -4,7 +4,7 @@ import { LogoWordmark } from "@/components/brand/Logo";
 import { BackToTop } from "@/components/layout/BackToTop";
 import { Icon } from "@/components/ui/Icon";
 import { ButtonLink, Eyebrow } from "@/components/ui/primitives";
-import { company, nav, services, whatsappLink } from "@/content/site";
+import { areas, company, navFlat, whatsappLink } from "@/content/site";
 
 export function Footer() {
   const a = company.address;
@@ -57,17 +57,17 @@ export function Footer() {
           </div>
 
           <FooterCol title="Navegação" className="lg:col-span-2">
-            {[{ href: "/", label: "Início" }, ...nav, { href: "/links", label: "Links" }].map((n) => (
+            {[{ href: "/", label: "Início" }, ...navFlat, { href: "/links", label: "Links" }].map((n) => (
               <FooterLink key={n.href} href={n.href}>
                 {n.label}
               </FooterLink>
             ))}
           </FooterCol>
 
-          <FooterCol title="Serviços" className="lg:col-span-3">
-            {services.slice(0, 6).map((s) => (
-              <FooterLink key={s.slug} href={`/servicos/${s.slug}`}>
-                {s.title}
+          <FooterCol title="Áreas de atuação" className="lg:col-span-3">
+            {areas.map((a) => (
+              <FooterLink key={a.slug} href={`/areas/${a.slug}`}>
+                {a.title}
               </FooterLink>
             ))}
             <li>

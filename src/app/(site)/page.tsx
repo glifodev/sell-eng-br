@@ -10,7 +10,8 @@ import { Icon } from "@/components/ui/Icon";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ArrowCard, ButtonLink, Eyebrow, SectionHeader } from "@/components/ui/primitives";
 import { Reveal } from "@/components/ui/Reveal";
-import { faq, pillars, projects, services } from "@/content/site";
+import { faq, getArea, pillars, projects, services } from "@/content/site";
+import { posts } from "@/content/posts";
 import { faqJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -204,6 +205,23 @@ export default function Home() {
             Fundeio, salvatagem, reforma estrutural, içamento, gestão de operação e capacitação.
           </p>
           <ArrowCard href="/projetos" title="Ver todos os projetos" tone="dark" className="min-h-[80px] sm:w-64" />
+        </div>
+      </section>
+
+      {/* CONTEÚDOS */}
+      <section className="border-t border-line">
+        <div className="container-x py-24 md:py-32">
+          <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+            <SectionHeader eyebrow="Conteúdos" title="Engenharia explicada por quem está em campo." />
+            <ButtonLink href="/conteudos" variant="ghost" arrow>
+              Todos os conteúdos
+            </ButtonLink>
+          </div>
+          <div className="mt-12 grid gap-3 md:grid-cols-3">
+            {posts.slice(0, 3).map((p) => (
+              <ArrowCard key={p.slug} href={`/conteudos/${p.slug}`} title={p.title} text={`${getArea(p.area)?.label} · ${p.readingMinutes} min`} className="min-h-[200px]" />
+            ))}
+          </div>
         </div>
       </section>
 

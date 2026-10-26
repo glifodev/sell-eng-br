@@ -9,7 +9,7 @@ import { Icon } from "@/components/ui/Icon";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ArrowCard, ButtonLink, Eyebrow } from "@/components/ui/primitives";
 import { Reveal } from "@/components/ui/Reveal";
-import { getService, projects, services, whatsappLink } from "@/content/site";
+import { areaOfService, getService, projects, services, whatsappLink } from "@/content/site";
 import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -29,14 +29,24 @@ export default async function ServicoPage({ params }: PageProps<"/servicos/[slug
   if (!s) notFound();
 
   const related = projects.filter((p) => p.services.includes(s.slug)).slice(0, 2);
-  const others = services.filter((o) => o.slug !== s.slug).slice(0, 4);
+  const area = areaOfService(s.slug);
+  // mesma área primeiro, depois as demais
+  const others = services
+    .filter((o) => o.slug !== s.slug)
+    .sort((x, y) => Number(area?.services.includes(y.slug) ?? 0) - Number(area?.services.includes(x.slug) ?? 0))
+    .slice(0, 4);
 
   return (
     <>
       <PageHero
         image={s.image}
         imageAlt={s.imageAlt}
-        crumbs={[{ href: "/", label: "Início" }, { href: "/servicos", label: "Serviços" }, { label: s.title }]}
+        crumbs={[
+          { href: "/", label: "Início" },
+          { href: "/servicos", label: "Serviços" },
+          ...(area ? [{ href: `/areas/${area.slug}`, label: area.label }] : []),
+          { label: s.title },
+        ]}
         title={s.title}
         lead={s.short}
       >
@@ -127,7 +137,14 @@ export default async function ServicoPage({ params }: PageProps<"/servicos/[slug
 
       <section className="border-t border-line">
         <div className="container-x py-20">
-          <p className="eyebrow text-muted">Outros serviços</p>
+          <div className="flex items-end justify-between gap-6">
+            <p className="eyebrow text-muted">Outros serviços</p>
+            {area && (
+              <Link href={`/areas/${area.slug}`} className="text-sm underline underline-offset-4">
+                {area.title}
+              </Link>
+            )}
+          </div>
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {others.map((o) => (
               <ArrowCard key={o.slug} href={`/servicos/${o.slug}`} title={o.title} text={o.short} className="min-h-[170px]" />
@@ -141,6 +158,7 @@ export default async function ServicoPage({ params }: PageProps<"/servicos/[slug
         data={breadcrumbJsonLd([
           { name: "Início", path: "/" },
           { name: "Serviços", path: "/servicos" },
+          ...(area ? [{ name: area.title, path: `/areas/${area.slug}` }] : []),
           { name: s.title, path: `/servicos/${s.slug}` },
         ])}
       />

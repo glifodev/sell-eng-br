@@ -4,10 +4,12 @@ import { ProjectCard } from "@/components/sections/Cards";
 import { PageHero } from "@/components/sections/PageHero";
 import { WireScene } from "@/components/three/Scene";
 import { modelInfo } from "@/components/three/wireModels";
+import { Icon } from "@/components/ui/Icon";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ArrowCard, ButtonLink, Eyebrow } from "@/components/ui/primitives";
 import { Reveal } from "@/components/ui/Reveal";
-import { getProject, getService, projects } from "@/content/site";
+import Link from "next/link";
+import { areaOfProject, getProject, getService, projects } from "@/content/site";
 import { breadcrumbJsonLd, pageMetadata, projectJsonLd } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -27,6 +29,7 @@ export default async function ProjetoPage({ params }: PageProps<"/projetos/[slug
   if (!p) notFound();
 
   const svc = p.services.map(getService).filter((s) => s !== undefined);
+  const area = areaOfProject(p);
   const facts = [
     ["Categoria", p.category],
     ["Cliente", p.client],
@@ -56,6 +59,15 @@ export default async function ProjetoPage({ params }: PageProps<"/projetos/[slug
                 </div>
               ))}
             </dl>
+            {area && (
+              <Link href={`/areas/${area.slug}`} className="flex items-center justify-between gap-4 border border-line-dark p-4 text-sm transition-colors hover:border-signal">
+                <span>
+                  <span className="eyebrow block text-white/45">Área de atuação</span>
+                  <span className="mt-1 block">{area.title}</span>
+                </span>
+                <Icon name="arrow" className="size-4 shrink-0" />
+              </Link>
+            )}
             <div>
               <p className="eyebrow text-white/45">Escopo</p>
               <ul className="mt-4 flex flex-wrap gap-2">
@@ -85,6 +97,18 @@ export default async function ProjetoPage({ params }: PageProps<"/projetos/[slug
               <Eyebrow className="text-white/75">Solução</Eyebrow>
               <p className="mt-6 text-lg leading-relaxed text-white/65">{p.solution}</p>
             </Reveal>
+            {p.results && p.results.length > 0 && (
+              <Reveal delay={0.1} className="mt-14">
+                <Eyebrow className="text-white/75">Resultado</Eyebrow>
+                <ul className="mt-6 grid gap-px border border-line-dark bg-line-dark sm:grid-cols-2">
+                  {p.results.map((r) => (
+                    <li key={r} className="bg-abyss p-5 text-[15px] leading-relaxed">
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            )}
 
             <div className="mt-14 grid gap-3 sm:grid-cols-2">
               {p.gallery.map((src, i) => (

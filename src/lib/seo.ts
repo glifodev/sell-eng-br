@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { company, SITE_URL, services, type Service, type Project } from "@/content/site";
+import { company, SITE_URL, services, type Member, type Service, type Project } from "@/content/site";
+import type { Post } from "@/content/posts";
 
 export function pageMetadata({
   title,
@@ -153,5 +154,34 @@ export function faqJsonLd(items: { q: string; a: string }[]) {
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
+  };
+}
+
+export function articleJsonLd(p: Post) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: p.title,
+    description: p.excerpt,
+    url: `${SITE_URL}/conteudos/${p.slug}`,
+    image: `${SITE_URL}${p.cover}`,
+    datePublished: p.date,
+    dateModified: p.date,
+    author: { "@id": orgId },
+    publisher: { "@id": orgId },
+    inLanguage: "pt-BR",
+    keywords: p.keywords.join(", "),
+  };
+}
+
+export function personJsonLd(m: Member) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: m.name,
+    jobTitle: m.role,
+    url: `${SITE_URL}/corpo-tecnico/${m.slug}`,
+    worksFor: { "@id": orgId },
+    ...(m.linkedin ? { sameAs: [m.linkedin] } : {}),
   };
 }

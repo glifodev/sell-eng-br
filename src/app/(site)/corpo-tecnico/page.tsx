@@ -1,5 +1,6 @@
-import Image from "next/image";
+import Link from "next/link";
 import { CompetencyExplorer } from "@/components/sections/CompetencyExplorer";
+import { MemberAvatar } from "@/components/sections/MemberAvatar";
 import { PageHero } from "@/components/sections/PageHero";
 import { Icon } from "@/components/ui/Icon";
 import { JsonLd } from "@/components/ui/JsonLd";
@@ -14,15 +15,6 @@ export const metadata = pageMetadata({
     "Equipe multidisciplinar de engenheiros navais, mecânicos e ambientais da SELL, em São Luís/MA, pronta para projetos, inspeções e operações.",
   path: "/corpo-tecnico",
 });
-
-const initials = (n: string) =>
-  n
-    .split(" ")
-    .filter((p) => p.length > 2)
-    .slice(0, 2)
-    .map((p) => p[0])
-    .join("");
-
 
 export default function CorpoTecnicoPage() {
   return (
@@ -44,21 +36,15 @@ export default function CorpoTecnicoPage() {
         <ul className="mt-14 grid gap-x-4 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {team.map((m, i) => (
             <Reveal as="li" key={m.name} delay={(i % 3) * 0.06}>
-              <div className="relative aspect-[4/5] overflow-hidden bg-abyss">
-                {m.photo ? (
-                  <Image src={m.photo} alt={m.name} fill sizes="(min-width: 1024px) 380px, 50vw" className="object-cover" />
-                ) : (
-                  <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_30%_20%,#0b2c63,#031330_70%)]">
-                    <span className="text-6xl font-light tracking-tight text-white/85">{initials(m.name)}</span>
-                    <svg className="absolute inset-x-0 bottom-0 h-24 w-full text-tide/40" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
-                      <path d="M0 60 Q50 40 100 60 T200 60 T300 60 T400 60" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                      <path d="M0 75 Q50 55 100 75 T200 75 T300 75 T400 75" fill="none" stroke="currentColor" strokeWidth="1" />
-                    </svg>
-                  </div>
-                )}
+              <Link href={`/corpo-tecnico/${m.slug}`} aria-label={`Perfil de ${m.name}`} className="relative block aspect-[4/5] overflow-hidden bg-abyss">
+                <MemberAvatar m={m} sizes="(min-width: 1024px) 380px, 50vw" />
                 <span className="eyebrow absolute top-4 left-4 bg-white/10 px-2 py-1 text-white/80 backdrop-blur">{m.area}</span>
-              </div>
-              <h2 className="mt-5 text-xl tracking-tight">{m.name}</h2>
+              </Link>
+              <h2 className="mt-5 text-xl tracking-tight">
+                <Link href={`/corpo-tecnico/${m.slug}`} className="hover:underline">
+                  {m.name}
+                </Link>
+              </h2>
               <p className="mt-1 text-sm text-muted">{m.role}</p>
               {m.linkedin && (
                 <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm hover:underline">
@@ -90,6 +76,7 @@ export default function CorpoTecnicoPage() {
             "@type": "Person",
             name: m.name,
             jobTitle: m.role,
+            url: `${SITE_URL}/corpo-tecnico/${m.slug}`,
             worksFor: { "@id": `${SITE_URL}/#organizacao` },
           })),
         }}

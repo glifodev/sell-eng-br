@@ -47,13 +47,28 @@ export const company = {
 export const whatsappLink = (msg = "Olá, SELL! Gostaria de falar sobre um projeto.") =>
   `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(msg)}`;
 
-export const nav = [
+export type NavItem = { href: string; label: string; children?: { href: string; label: string }[] };
+
+/** "/servicos" abre o menu de áreas e serviços; demais itens com `children` abrem um submenu simples. */
+export const nav: NavItem[] = [
   { href: "/servicos", label: "Serviços" },
   { href: "/projetos", label: "Projetos" },
-  { href: "/sobre", label: "Sobre" },
-  { href: "/corpo-tecnico", label: "Corpo Técnico" },
+  {
+    href: "/sobre",
+    label: "Sobre",
+    children: [
+      { href: "/sobre", label: "A empresa" },
+      { href: "/corpo-tecnico", label: "Corpo técnico" },
+      { href: "/regioes", label: "Regiões atendidas" },
+      { href: "/carreiras", label: "Carreiras" },
+    ],
+  },
+  { href: "/conteudos", label: "Conteúdos" },
   { href: "/contato", label: "Contato" },
-] as const;
+];
+
+/** Todos os links do menu em lista única (rodapé, menu móvel). */
+export const navFlat = nav.flatMap((n) => n.children ?? [{ href: n.href, label: n.label }]);
 
 /* ------------------------------------------------------------------ */
 /* Serviços                                                            */
@@ -430,6 +445,126 @@ export const services: Service[] = [
 export const getService = (slug: string) => services.find((s) => s.slug === slug);
 
 /* ------------------------------------------------------------------ */
+/* Áreas de atuação (agrupam os serviços)                              */
+/* ------------------------------------------------------------------ */
+
+export type Area = {
+  slug: string;
+  title: string;
+  label: string; // rótulo curto para filtros e chips
+  short: string;
+  intro: string;
+  forWho: string[];
+  services: string[]; // slugs, na ordem de exibição
+  image: string;
+  imageAlt: string;
+  icon: IconName;
+  model: WireModelName;
+  keywords: string[];
+  seoTitle: string;
+  seoDescription: string;
+};
+
+export const areas: Area[] = [
+  {
+    slug: "projetos-e-engenharia-estrutural",
+    title: "Projetos e Engenharia Estrutural",
+    label: "Projetos e estruturas",
+    short: "Projeto naval, portuário e mecânico com verificação estrutural por elementos finitos.",
+    intro:
+      "Concebemos, calculamos e detalhamos embarcações, balsas, estruturas portuárias e equipamentos mecânicos. A simulação por elementos finitos entra cedo, para que cada reforço tenha justificativa e cada chapa tenha função.",
+    forWho: ["Armadores e operadores de balsas", "Terminais e operadores portuários", "Estaleiros e oficinas de reparo", "Indústria com equipamentos de içamento"],
+    services: ["projetos-navais-portuarios-mecanicos", "analise-elementos-finitos-mef"],
+    image: "/images/stock/navio-nevoa.jpg",
+    imageAlt: "Navio de grande porte navegando em meio à névoa",
+    icon: "hull",
+    model: "hull",
+    keywords: ["projeto naval São Luís", "engenharia estrutural naval", "projeto de balsa", "análise por elementos finitos"],
+    seoTitle: "Projetos Navais e Engenharia Estrutural | SELL",
+    seoDescription:
+      "Projetos navais, portuários e mecânicos com análise por elementos finitos: do estudo de viabilidade ao detalhamento executivo. São Luís/MA.",
+  },
+  {
+    slug: "inspecao-e-integridade",
+    title: "Inspeção e Integridade de Ativos",
+    label: "Inspeção e integridade",
+    short: "Inspeção subaquática e ensaios por ultrassom para decidir reparos com dados.",
+    intro:
+      "Medimos, registramos e interpretamos o estado real de cascos, estacas, defensas e estruturas submersas. O resultado é um relatório que separa o que precisa de reparo agora do que pode ser acompanhado.",
+    forWho: ["Armadores em vistoria periódica", "Terminais com estruturas submersas", "Operadores antes de docagem ou reforma", "Seguradoras e vistoriadores"],
+    services: ["inspecao-subaquatica", "ensaios-nao-destrutivos-ultrassom"],
+    image: "/images/stock/mergulhador-casco.jpg",
+    imageAlt: "Mergulhador inspecionando o casco de uma embarcação",
+    icon: "diver",
+    model: "jacket",
+    keywords: ["inspeção subaquática São Luís", "medição de espessura por ultrassom", "integridade estrutural naval", "inspeção com ROV"],
+    seoTitle: "Inspeção Subaquática e Integridade de Ativos | SELL",
+    seoDescription:
+      "Inspeção subaquática com mergulho e ROV e medição de espessura por ultrassom para cascos e estruturas portuárias no Norte e Nordeste.",
+  },
+  {
+    slug: "operacoes-maritimas-e-portuarias",
+    title: "Operações Marítimas e Portuárias",
+    label: "Operações",
+    short: "Içamento, movimentação de cargas e gestão de operações navais, do plano ao campo.",
+    intro:
+      "Planejamos e acompanhamos operações sobre a água: içamento com balsa guindaste, movimentação de cargas especiais, docagens e reformas. O plano é verificado antes da mobilização e cada etapa é rastreada em campo.",
+    forWho: ["Operadores portuários e de terminais", "Empresas de dragagem e obras marítimas", "Armadores com frota em operação", "Cargas especiais e de projeto"],
+    services: ["operacoes-portuarias-icamento", "gestao-de-operacoes-navais", "gerenciamento-de-projetos"],
+    image: "/images/stock/guindaste-flutuante.jpg",
+    imageAlt: "Guindaste flutuante em operação no mar",
+    icon: "crane",
+    model: "crane",
+    keywords: ["plano de içamento", "operações portuárias São Luís", "gestão de operações navais", "balsa guindaste"],
+    seoTitle: "Operações Marítimas, Portuárias e Içamento | SELL",
+    seoDescription:
+      "Planos de içamento, movimentação de cargas, gestão de operações navais e gerenciamento de projetos portuários em São Luís e no Norte/Nordeste.",
+  },
+  {
+    slug: "salvatagem-e-meio-ambiente",
+    title: "Salvatagem e Meio Ambiente",
+    label: "Salvatagem e ambiental",
+    short: "Resgate e reflutuação de embarcações, resposta a emergências e consultoria ambiental.",
+    intro:
+      "Quando uma embarcação afunda ou encalha, a engenharia vem antes da manobra. Elaboramos planos de reflutuação e contenção e apoiamos licenciamento, estudos e planos ambientais para operações portuárias e navais.",
+    forWho: ["Armadores com sinistro", "Seguradoras e P&I", "Terminais e operadores portuários", "Empreendimentos em licenciamento"],
+    services: ["salvatagem-resposta-ambiental", "consultoria-ambiental"],
+    image: "/images/stock/oceano-aereo.jpg",
+    imageAlt: "Ondas do oceano vistas de cima",
+    icon: "lifebuoy",
+    model: "mooring",
+    keywords: ["salvatagem São Luís", "resgate de embarcação", "resposta a derramamento de óleo", "consultoria ambiental portuária"],
+    seoTitle: "Salvatagem, Resposta Ambiental e Consultoria | SELL",
+    seoDescription:
+      "Salvatagem, reflutuação de embarcações, resposta a emergências ambientais e consultoria ambiental para portos e navegação no Norte e Nordeste.",
+  },
+  {
+    slug: "seguranca-e-capacitacao",
+    title: "Segurança e Capacitação",
+    label: "Segurança e capacitação",
+    short: "Segurança do trabalho, higiene ocupacional e treinamento técnico para equipes de campo.",
+    intro:
+      "Adequamos operações portuárias e navais às NRs e preparamos equipes para atuar com segurança. Programas, avaliações e treinamentos conduzidos por quem conhece o convés e o cais.",
+    forWho: ["Terminais e operadores portuários", "Estaleiros e oficinas", "Armadores e tripulações", "Empresas contratadas em área portuária"],
+    services: ["seguranca-do-trabalho", "capacitacao-tecnica"],
+    image: "/images/stock/boia-laranja.jpg",
+    imageAlt: "Bóia laranja flutuando na água",
+    icon: "shield",
+    model: "padeye",
+    keywords: ["segurança do trabalho portuária", "NR-29", "NR-34", "treinamento técnico naval"],
+    seoTitle: "Segurança do Trabalho e Capacitação Naval | SELL",
+    seoDescription:
+      "SST portuária e naval, adequação às NR-29, NR-33 e NR-34, higiene ocupacional e treinamentos técnicos para equipes em São Luís/MA.",
+  },
+];
+
+export const getArea = (slug: string) => areas.find((a) => a.slug === slug);
+export const areaOfService = (serviceSlug: string) => areas.find((a) => a.services.includes(serviceSlug));
+export const areaServices = (a: Area) => a.services.map(getService).filter((s) => s !== undefined);
+/** Área principal de um projeto: a do primeiro serviço listado. */
+export const areaOfProject = (p: Project) => areaOfService(p.services[0]);
+
+/* ------------------------------------------------------------------ */
 /* Projetos                                                            */
 /* ------------------------------------------------------------------ */
 
@@ -445,6 +580,8 @@ export type Project = {
   cover: string;
   gallery: string[];
   model: WireModelName;
+  // TODO(cliente): resultados mensuráveis (prazo, economia, disponibilidade) de cada case
+  results?: string[];
   // TODO(cliente): preencher quando autorizado
   client?: string;
   location?: string;
@@ -557,21 +694,47 @@ export const getProject = (slug: string) => projects.find((p) => p.slug === slug
 /* ------------------------------------------------------------------ */
 
 export type Member = {
+  slug: string;
   name: string;
   role: string;
   area: string;
+  areas: string[]; // slugs de áreas de atuação
   photo?: string;
   linkedin?: string;
+  // Perfis sem bio ficam fora do índice de busca (noindex) até serem completados.
+  bio?: string;
+  education?: string[];
+  crea?: string;
 };
 
-// TODO(cliente): fotos individuais confirmadas, mini-bio, CREA e LinkedIn.
+// TODO(cliente): fotos individuais confirmadas, mini-bio, formação, CREA e LinkedIn.
 export const team: Member[] = [
-  { name: "Landrin Sandin Filho", role: "Eng. Mecânico · MSc. Eng. Naval", area: "Naval e mecânica" },
-  { name: "Leonardo Trindade de Oliveira", role: "Eng. e MSc. Naval", area: "Naval" },
-  { name: "Rodrigo Vitelli", role: "Engenheiro Naval", area: "Naval" },
-  { name: "João Guilherme Santana", role: "Equipe técnica", area: "Operações" },
-  { name: "Denise Silva", role: "Engenheira Ambiental", area: "Ambiental" },
+  {
+    slug: "landrin-sandin-filho",
+    name: "Landrin Sandin Filho",
+    role: "Eng. Mecânico · MSc. Eng. Naval",
+    area: "Naval e mecânica",
+    areas: ["projetos-e-engenharia-estrutural", "operacoes-maritimas-e-portuarias"],
+  },
+  {
+    slug: "leonardo-trindade-de-oliveira",
+    name: "Leonardo Trindade de Oliveira",
+    role: "Eng. e MSc. Naval",
+    area: "Naval",
+    areas: ["projetos-e-engenharia-estrutural", "inspecao-e-integridade"],
+  },
+  { slug: "rodrigo-vitelli", name: "Rodrigo Vitelli", role: "Engenheiro Naval", area: "Naval", areas: ["projetos-e-engenharia-estrutural", "operacoes-maritimas-e-portuarias"] },
+  {
+    slug: "joao-guilherme-santana",
+    name: "João Guilherme Santana",
+    role: "Equipe técnica",
+    area: "Operações",
+    areas: ["operacoes-maritimas-e-portuarias", "seguranca-e-capacitacao"],
+  },
+  { slug: "denise-silva", name: "Denise Silva", role: "Engenheira Ambiental", area: "Ambiental", areas: ["salvatagem-e-meio-ambiente"] },
 ];
+
+export const getMember = (slug: string) => team.find((m) => m.slug === slug);
 
 /* ------------------------------------------------------------------ */
 /* Clientes                                                            */

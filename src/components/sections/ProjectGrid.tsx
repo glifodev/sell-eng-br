@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
-import type { Project } from "@/content/site";
+import { areaOfProject, type Project } from "@/content/site";
 
-const area = (p: Project) => p.category.split(" · ")[0];
+const area = (p: Project) => areaOfProject(p)?.label ?? p.category.split(" · ")[0];
 
 /** Grade de projetos com filtro por área — versão para fundo escuro. */
 export function ProjectGrid({ projects }: { projects: Project[] }) {
