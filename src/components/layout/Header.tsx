@@ -6,7 +6,13 @@ import { useEffect, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { getLenis } from "@/components/layout/SmoothScroll";
 import { Icon } from "@/components/ui/Icon";
-import { company, nav, services, whatsappLink } from "@/content/site";
+import { areaServices, areas, company, nav, whatsappLink } from "@/content/site";
+
+/** Menu móvel: itens com submenu viram o item-pai seguido dos filhos (sem repetir o pai). */
+const mobileLinks = [
+  { href: "/", label: "Início" },
+  ...nav.flatMap((n) => (n.children ? [{ href: n.href, label: n.label }, ...n.children.filter((c) => c.href !== n.href)] : [n])),
+];
 
 /** Rotas cuja primeira dobra é clara (header começa com texto escuro). */
 const LIGHT_TOP = ["/contato", "/privacidade", "/termos", "/creditos"];
@@ -15,7 +21,7 @@ export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [svcOpen, setSvcOpen] = useState(false);
+  const [menu, setMenu] = useState<string | null>(null); // href do submenu aberto (desktop)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -29,7 +35,7 @@ export function Header() {
   if (pathname !== lastPath) {
     setLastPath(pathname);
     setOpen(false);
-    setSvcOpen(false);
+    setMenu(null);
   }
 
   // trava a rolagem da página com o menu móvel aberto + Esc fecha
@@ -64,52 +70,90 @@ export function Header() {
           </Link>
 
           <nav aria-label="Principal" className="hidden items-center gap-1 lg:flex">
-            {nav.map((item) =>
-              item.href === "/servicos" ? (
-                <div key={item.href} className="relative" onMouseEnter={() => setSvcOpen(true)} onMouseLeave={() => setSvcOpen(false)}>
+            {nav.map((item) => {
+              const mega = item.href === "/servicos";
+              if (!mega && !item.children) {
+                return (
                   <Link
+                    key={item.href}
                     href={item.href}
-                    aria-expanded={svcOpen}
-                    onFocus={() => setSvcOpen(true)}
-                    className={`flex items-center gap-1 px-3 py-2 text-[13.5px] transition-opacity ${isActive(item.href) ? "opacity-100" : "opacity-75 hover:opacity-100"}`}
+                    className={`relative px-3 py-2 text-[13.5px] transition-opacity ${isActive(item.href) ? "opacity-100" : "opacity-75 hover:opacity-100"}`}
                   >
                     {item.label}
-                    <Icon name="chevron" className={`size-3.5 transition-transform ${svcOpen ? "rotate-180" : ""}`} />
+                    {isActive(item.href) && <span className="absolute inset-x-3 -bottom-0.5 h-px bg-signal" aria-hidden="true" />}
+                  </Link>
+                );
+              }
+              const isOpen = menu === item.href;
+              const active = isActive(item.href) || (mega ? pathname.startsWith("/areas/") : item.children!.some((c) => isActive(c.href)));
+              // fecha ao sair do painel pelo teclado
+              const onBlur = (e: React.FocusEvent<HTMLElement>) => {
+                if (!e.currentTarget.closest("[data-submenu]")?.contains(e.relatedTarget as Node)) setMenu(null);
+              };
+              return (
+                <div key={item.href} data-submenu className="relative" onMouseEnter={() => setMenu(item.href)} onMouseLeave={() => setMenu(null)}>
+                  <Link
+                    href={item.href}
+                    aria-expanded={isOpen}
+                    onFocus={() => setMenu(item.href)}
+                    className={`relative flex items-center gap-1 px-3 py-2 text-[13.5px] transition-opacity ${active ? "opacity-100" : "opacity-75 hover:opacity-100"}`}
+                  >
+                    {item.label}
+                    <Icon name="chevron" className={`size-3.5 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                    {active && <span className="absolute inset-x-3 -bottom-0.5 h-px bg-signal" aria-hidden="true" />}
                   </Link>
                   <div
-                    className={`absolute top-full left-1/2 w-[580px] -translate-x-1/2 pt-3 transition-all duration-300 ${
-                      svcOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
+                    className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-300 ${mega ? "w-[820px]" : "w-[240px]"} ${
+                      isOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
                     }`}
                   >
-                    <ul className="grid grid-cols-2 gap-px border border-line-dark bg-line-dark text-white shadow-2xl shadow-black/40">
-                      {services.map((s) => (
-                        <li key={s.slug}>
-                          <Link
-                            href={`/servicos/${s.slug}`}
-                            onBlur={(e) => {
-                              if (!e.currentTarget.closest("ul")?.contains(e.relatedTarget as Node)) setSvcOpen(false);
-                            }}
-                            className="flex h-full items-start gap-3 bg-abyss p-4 text-[13px] leading-snug transition-colors hover:bg-hull"
-                          >
-                            <Icon name={s.icon} className="mt-0.5 size-4 shrink-0 text-signal" />
-                            {s.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+                    {mega ? (
+                      <div className="grid grid-cols-3 gap-px border border-line-dark bg-line-dark text-white shadow-2xl shadow-black/40">
+                        {areas.map((a) => (
+                          <div key={a.slug} className="bg-abyss p-4">
+                            <Link
+                              href={`/areas/${a.slug}`}
+                              onBlur={onBlur}
+                              className="flex items-center gap-2 text-[13.5px] font-medium transition-colors hover:text-signal"
+                            >
+                              <Icon name={a.icon} className="size-4 shrink-0 text-signal" />
+                              {a.title}
+                            </Link>
+                            <ul className="mt-3 space-y-1 border-l border-line-dark pl-4">
+                              {areaServices(a).map((s) => (
+                                <li key={s.slug}>
+                                  <Link href={`/servicos/${s.slug}`} onBlur={onBlur} className="block py-1 text-[12.5px] leading-snug text-white/65 transition-colors hover:text-white">
+                                    {s.title}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                        <Link
+                          href="/servicos"
+                          onBlur={onBlur}
+                          className="flex flex-col justify-between gap-4 bg-hull p-4 text-[13.5px] transition-colors hover:bg-signal hover:text-abyss"
+                        >
+                          <Icon name="arrow" className="size-4 self-end" />
+                          <span>Ver todos os serviços</span>
+                        </Link>
+                      </div>
+                    ) : (
+                      <ul className="grid gap-px border border-line-dark bg-line-dark text-white shadow-2xl shadow-black/40">
+                        {item.children!.map((c) => (
+                          <li key={c.href}>
+                            <Link href={c.href} onBlur={onBlur} className="block bg-abyss px-4 py-3 text-[13px] transition-colors hover:bg-hull">
+                              {c.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </div>
-              ) : (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`relative px-3 py-2 text-[13.5px] transition-opacity ${isActive(item.href) ? "opacity-100" : "opacity-75 hover:opacity-100"}`}
-                >
-                  {item.label}
-                  {isActive(item.href) && <span className="absolute inset-x-3 -bottom-0.5 h-px bg-signal" aria-hidden="true" />}
-                </Link>
-              ),
-            )}
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-2">
@@ -152,7 +196,7 @@ export function Header() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,#0b2c63,transparent_60%)]" aria-hidden="true" />
         <nav aria-label="Menu móvel" className="container-x relative flex min-h-full flex-col py-8">
           <ul>
-            {[{ href: "/", label: "Início" }, ...nav].map((item, i) => (
+            {mobileLinks.map((item, i) => (
               <li
                 key={item.href}
                 className={`border-b border-line-dark transition-all duration-500 ease-out-expo ${open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
@@ -166,13 +210,13 @@ export function Header() {
             ))}
           </ul>
 
-          <p className="eyebrow mt-10 text-white/50">Serviços</p>
+          <p className="eyebrow mt-10 text-white/50">Áreas de atuação</p>
           <ul className="mt-4 grid gap-x-6 sm:grid-cols-2">
-            {services.map((s) => (
-              <li key={s.slug}>
-                <Link href={`/servicos/${s.slug}`} className="flex items-center gap-3 py-2.5 text-[15px] text-white/75 hover:text-white">
-                  <Icon name={s.icon} className="size-4 shrink-0 text-signal" />
-                  {s.title}
+            {areas.map((a) => (
+              <li key={a.slug}>
+                <Link href={`/areas/${a.slug}`} className="flex items-center gap-3 py-2.5 text-[15px] text-white/75 hover:text-white">
+                  <Icon name={a.icon} className="size-4 shrink-0 text-signal" />
+                  {a.title}
                 </Link>
               </li>
             ))}

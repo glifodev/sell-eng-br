@@ -19,6 +19,7 @@ export default function PrivacidadePage() {
       <h2>Dados que coletamos</h2>
       <ul>
         <li>Dados informados no formulário de contato: nome, e-mail, telefone, empresa e conteúdo da mensagem.</li>
+        <li>Currículos e dados profissionais enviados ao banco de talentos, usados apenas em processos seletivos da SELL.</li>
         <li>Dados técnicos de navegação, como endereço IP, tipo de navegador e páginas acessadas, para segurança e estatística.</li>
       </ul>
       <h2>Para que usamos</h2>
@@ -41,6 +42,12 @@ export default function PrivacidadePage() {
       </p>
       <h2>Cookies</h2>
       <p>Este site utiliza apenas cookies estritamente necessários ao seu funcionamento. Caso venhamos a usar cookies de análise, esta política será atualizada.</p>
+      {/* TODO(cliente): nomear o encarregado (DPO) e, se houver, um e-mail dedicado à privacidade. */}
+      <h2>Encarregado pelo tratamento de dados</h2>
+      <p>
+        Dúvidas, solicitações e reclamações sobre dados pessoais podem ser enviadas ao encarregado pelo e-mail{" "}
+        <a href={`mailto:${company.emails.comercial}`}>{company.emails.comercial}</a>, com o assunto “LGPD”.
+      </p>
       <h2>Contato</h2>
       <p>
         {company.legalName} — {company.address.street}, {company.address.complement}, {company.address.district}, {company.address.city}/
