@@ -11,7 +11,9 @@ Arquivos em `public/brand/`:
 | `sell-wordmark.svg` / `sell-mark.svg` | fundo claro |
 | `sell-white-wordmark.svg` / `sell-white-mark.svg` | fundo escuro |
 | `sell-mono-*.svg` | 1 cor (carimbo, gravação, fax) |
-| `src/app/icon.svg` | favicon / app icon |
+| `src/app/icon.svg`, `src/app/favicon.ico` | favicon (vetor; 16/32/48 px para navegadores antigos) |
+| `src/app/apple-icon.png` | tela inicial do iOS (180 px, sem canto cortado) |
+| `public/icons/` | PWA/Android (192, 512 e maskable 512) |
 
 Área de proteção: altura do "E" ao redor. Tamanho mínimo: wordmark com 18 px de altura, símbolo com 16 px.
 
